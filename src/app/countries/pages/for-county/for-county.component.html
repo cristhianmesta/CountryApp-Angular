@@ -1,30 +1,44 @@
 <h3>BUSQUEDA POR PAIS</h3>
-<form action="">
+<form (ngSubmit)="search()" autocomplete="off">
     <input type="text"
            class="form-control"
+           name="searchParameter"
+           [(ngModel)]="searchParameter"
            placeholder="Buscar por pais...">
 </form>
 <hr>
-<div class="alert alert-danger">
-    No se encontró la búsqueda del valor ....
+<div *ngIf="thereIsError" 
+     class="alert alert-danger">
+    No se encontró la búsqueda del valor {{ searchParameter }}
 </div>
-<table class="table table-stripped">
+<table *ngIf="countries.length>0" 
+       class="table table-sm table-striped table-hover">
     <thead>
         <tr>
-            <th></th>
-            <th>PAIS</th>
-            <th>CAPITAL</th>
-            <th>POBLACIÓN</th>
-            <th></th>
+            <th> # </th>
+            <th> BANDERA </th>
+            <th> PAIS </th>
+            <th> CAPITAL </th>
+            <th> POBLACIÓN </th>
+            <th> </th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td></td>
-            <td>Perú</td>
-            <td>Lima</td>
-            <td>33,000,000</td>
-            <td></td>
+        <tr *ngFor="let country of countries; let i = index"
+            class="align-middle">
+            <td>{{ i + 1}}</td>
+            <td>
+                <img [src]="country.flag"
+                    class="small-flag"
+                    alt="" />
+            </td>
+            <td>{{ country.name }}</td>
+            <td>{{ country.capital }}</td>
+            <td>{{ country.population | number }}</td>
+            <td>
+                <a [routerLink]="[ '/por-pais', country.alpha2Code ]"
+                    class="btn btn-primary btn-sm float-end">Ver</a>
+            </td>
         </tr>
     </tbody>
 </table>
