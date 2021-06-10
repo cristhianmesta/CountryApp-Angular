@@ -5,13 +5,7 @@ import { CountriesService } from '../../services/countries.service';
 @Component({
   selector: 'app-for-county',
   templateUrl: './for-county.component.html',
-  styles: [
-  `
-    .small-flag{
-      width: 50px;
-    }
-  `
-  ]
+  styles: []
 })
 export class ForCountyComponent {
 
@@ -20,13 +14,13 @@ export class ForCountyComponent {
 
   countries : Country[] = [];
 
-
   constructor(private countriesService : CountriesService) { 
 
   }
 
-  search(){
+  search(parameter : string){
     this.thereIsError = false;
+    this.searchParameter = parameter;
     this.countriesService.forCountryService(this.searchParameter)
         .subscribe(
             (response) => {
@@ -35,13 +29,17 @@ export class ForCountyComponent {
             (error) => {
               this.thereIsError =true;
               this.countries = [];
-              console.log(this.thereIsError);
             }
           );
   }
 
   viewCountry(countryCode:string){
     console.log(countryCode);
+  }
+
+  suggest(termino : string){
+    this.thereIsError = false;
+    console.log("Holas");
   }
 
 }
