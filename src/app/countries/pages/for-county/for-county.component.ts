@@ -11,8 +11,10 @@ export class ForCountyComponent {
 
   searchParameter : string = "";
   thereIsError    : boolean = false;
+  showSuggest     : boolean = false;
 
-  countries : Country[] = [];
+  countries       : Country[] = [];
+  countriesSuggest: Country[] = [];
 
   constructor(private countriesService : CountriesService) { 
 
@@ -25,6 +27,7 @@ export class ForCountyComponent {
         .subscribe(
             (response) => {
               this.countries = response;
+              this.showSuggest = false;
             },
             (error) => {
               this.thereIsError =true;
@@ -38,8 +41,13 @@ export class ForCountyComponent {
   }
 
   suggest(termino : string){
+    this.showSuggest = true;
     this.thereIsError = false;
-    console.log("Holas");
+    this.countriesService.forCountryService(termino)
+        .subscribe( response => {
+            this.searchParameter = termino;
+            this.countriesSuggest = response.splice(0,3);
+        }, error => this.countriesSuggest = []);
   }
 
 }

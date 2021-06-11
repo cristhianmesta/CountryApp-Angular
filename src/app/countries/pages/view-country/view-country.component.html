@@ -1,1 +1,57 @@
-<p>view-country works!</p>
+<div *ngIf="!country; else divTemplate">
+    <div class="d-flex justify-content-center"> 
+        <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+</div>
+<ng-template #divTemplate>
+    <h3>{{ country.name }} | {{ country.alpha2Code }}</h3>
+    <hr>
+    <div class="row overflow-hidden">
+        <div class="col">
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.br }}</div>
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.es }}</div>
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.de }}</div>
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.fa }}</div>
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.fr }}</div>
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.hr }}</div>
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.it }}</div>
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.ja }}</div>
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.nl }}</div>
+            <div class="badge bg-success me-1 mb-1 p-2">{{ country.translations.pt }}</div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-5">
+            <img [src]="country.flag" class="img-thumbnail rounded ">
+        </div>
+        <div class="col-md-7">
+            <h6 class="text-center">INFO</h6>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>Continente: </strong>{{ country.region }} - {{ country.subregion }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Capital: </strong>{{ country.capital }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Idiomas: </strong> <span *ngFor="let language of country.languages">{{ language.name }}  </span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Monedas: </strong> <span *ngFor="let currency of country.currencies">{{ currency.name }} ({{ currency.symbol }} - {{ currency.code  }}) </span>
+                </li>
+                <li class="list-group-item">
+                    <strong>Gentilicio: </strong> {{ country.demonym }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Población: </strong>{{ country.population | number}}
+                </li>
+                <li class="list-group-item">
+                    <strong>Superficie: </strong>{{ country.area | number}}
+                </li>
+              </ul>
+        </div>
+    </div>
+</ng-template>

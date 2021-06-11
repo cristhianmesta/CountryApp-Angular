@@ -1,1 +1,29 @@
-<p>for-region works!</p>
+<h3>BUSQUEDA POR CONTINENTE</h3>
+<!--   [class.btn-primary] = "activeRegion === region" -->
+<!--   [ngClass] = "{ 
+            'btn-primary'          : activeRegion === region,
+            'btn-outline-primary'  : activeRegion !== region
+        }"
+ -->
+<div class="row">
+    <div class="col">
+        <button  *ngFor="let region of regions"
+                 class="btn btn-sm"
+                 [ngClass] = "getCSS(region)"
+                 (click)="listCountries(region)">
+            {{ region | uppercase }}
+        </button>
+    </div>
+</div>
+<hr>
+
+<div *ngIf="countries.length===0 && activeRegion !== ''">
+    <div class="d-flex justify-content-center"> 
+        <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+</div>
+<div *ngIf="countries.length>0">
+    <app-countries-table [countries] = "countries"></app-countries-table>
+</div>

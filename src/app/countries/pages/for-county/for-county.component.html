@@ -2,8 +2,26 @@
 <app-countries-input 
     (onEnter) = "search( $event )"
     (onDebounce) = "suggest( $event )"
+    placeholder = "Escribir una pais...."
     >
 </app-countries-input>
+<div *ngIf="showSuggest">
+    <ul class="list-group">
+        <li *ngFor="let country of countriesSuggest"
+            class="list-group-item list-group-item-action ">
+            <a [routerLink] = "['/por-pais', country.alpha2Code]"
+                class="nav-link">
+                {{ country.name }}
+            </a>
+        </li>
+        <li class="list-group-item list-group-item-action ">
+            <a (click) = "search(searchParameter)"
+                class="nav-link">
+                Buscar "{{ searchParameter }}"
+            </a>
+        </li>
+    </ul>
+</div>
 <hr>
 <div *ngIf="thereIsError" 
      class="alert alert-danger">
